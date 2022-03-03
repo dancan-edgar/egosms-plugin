@@ -51,14 +51,47 @@ use Inc\Activate;
 use Inc\Deactivate;
 
 if(! class_exists('Egosms')){
-
     class Egosms {
+
+        public $plugin;
+
+        function __construct()
+        {
+            $this->plugin = plugin_basename(__FILE__);
+        }
 
         function register(){
 
             add_action('admin_enqueue_scripts',array($this,'enqueue'));
 
+            add_action('admin_menu', array($this,'add_menu_pages'));
+
+            add_filter("plugin_action_links_$this->plugin",array($this,'settings_link'));
         }
+
+        public function settings_link($links)
+        {
+            $settings_link = '<a href="admin.php?page=egosms">Settings</a>';
+
+            array_unshift($links,$settings_link);
+
+            return $links;
+        }
+
+        // function to a menu option on the dashboard
+        public function add_menu_pages()
+        {
+            add_menu_page('Egosms','Egosms','manage_options','egosms',array($this,'admin_index'),plugins_url('/assets/img/icon.png',__FILE__),110);
+        }
+
+        public function admin_index()
+        {
+            // Require template
+
+            require_once plugin_dir_path(__FILE__) . '/templates/admin.php';
+        }
+
+
 
         // Function to be triggered on activate
         function activate(){
