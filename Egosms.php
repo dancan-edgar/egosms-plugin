@@ -41,24 +41,45 @@ if( ! function_exists('add_action')){
     die('You dont have access to this file');
 }
 
+if( file_exists(dirname(__FILE__) . '/vendor/autoload.php')){
+
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
+
+}
+
+use Inc\Activate;
+use Inc\Deactivate;
+
 if(! class_exists('Egosms')){
 
     class Egosms {
 
         function register(){
 
+            add_action('admin_enqueue_scripts',array($this,'enqueue'));
+
         }
 
         // Function to be triggered on activate
         function activate(){
-
+            Activate::activate();
         }
 
         // Function to be triggered on deactivate
         function deactivate(){
+            Deactivate::deactivate();
+        }
 
+        // Function to enqueue scripts
+        function enqueue(){
+
+            wp_enqueue_style('my_plugin_style',plugins_url('/assets/style.css',__FILE__));
+
+            wp_enqueue_script('my_plugin_script',plugins_url('/assets/script.js',__FILE__));
         }
     }
+
+
 
 
     $egosms = new Egosms();
