@@ -12,7 +12,7 @@
 /*
  * Plugin Name: Egosms
  * Plugin URI: https://github.com/dancan-edgar/egosms-plugin.git
- * Description: Datero enables use of shotcode  to display dates on a wordpress blog.
+ * Description: Egosms WordPress plugin enables you to integrate the Egosms Bulk messaging platform.
  * Version: 1.0.0
  * Author: Ampeire Edgar
  * Author URI: https://github.com/dancan-edgar
@@ -34,3 +34,39 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Datero. If not, see https://www.gnu.org/licenses/old-licenses/gpl-2.0.html.
 */
+
+defined('ABSPATH') or die("You dont have access to this file");
+
+if( ! function_exists('add_action')){
+    die('You dont have access to this file');
+}
+
+if(! class_exists('Egosms')){
+
+    class Egosms {
+
+        function register(){
+
+        }
+
+        // Function to be triggered on activate
+        function activate(){
+
+        }
+
+        // Function to be triggered on deactivate
+        function deactivate(){
+
+        }
+    }
+
+
+    $egosms = new Egosms();
+    $egosms->register();
+
+    // Activation hook
+    register_activation_hook(__FILE__,array($egosms,'activate'));
+
+    // Deactivation hook
+    register_deactivation_hook(__FILE__,array($egosms,'deactivate'));
+}
