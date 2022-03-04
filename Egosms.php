@@ -47,33 +47,21 @@ if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
 
 }
 
-// Define constants
-define('PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('PLUGIN_URL', plugin_dir_url(__FILE__));
-define('PLUGIN', plugin_basename(__FILE__));
-
-
-use Inc\Base\Activate;
-use Inc\Base\Deactivate;
-
 // Function to be triggered on activate
 function egosms_activate()
 {
-    Activate::activate();
+    Inc\Base\Activate::activate();
 }
+// Activation hook
+register_activation_hook(__FILE__, 'egosms_activate');
 
 // Function to be triggered on deactivate
 function egosms_deactivate()
 {
-    Deactivate::deactivate();
+    Inc\Base\Deactivate::deactivate();
 }
-
-// Activation hook
-register_activation_hook(__FILE__, 'egosms_activate');
-
 // Deactivation hook
 register_deactivation_hook(__FILE__, 'egosms_deactivate');
-//}
 
 if (class_exists('Inc\\Init')) {
 

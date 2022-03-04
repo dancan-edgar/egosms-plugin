@@ -1,6 +1,10 @@
 <?php
 
+/**
+ * @package Egosms
+ */
 namespace Inc\Base;
+
 class Activate
 {
     public static function Activate()
