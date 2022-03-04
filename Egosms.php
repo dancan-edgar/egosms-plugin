@@ -47,80 +47,9 @@ if( file_exists(dirname(__FILE__) . '/vendor/autoload.php')){
 
 }
 
-use Inc\Activate;
-use Inc\Deactivate;
+define('PLUGIN_PATH',plugin_dir_path(__FILE__));
+define('PLUGIN_URL',plugin_dir_url(__FILE__));
+if(class_exists('Inc\\Init')){
 
-if(! class_exists('Egosms')){
-    class Egosms {
-
-        public $plugin;
-
-        function __construct()
-        {
-            $this->plugin = plugin_basename(__FILE__);
-        }
-
-        function register(){
-
-            add_action('admin_enqueue_scripts',array($this,'enqueue'));
-
-            add_action('admin_menu', array($this,'add_menu_pages'));
-
-            add_filter("plugin_action_links_$this->plugin",array($this,'settings_link'));
-        }
-
-        public function settings_link($links)
-        {
-            $settings_link = '<a href="admin.php?page=egosms">Settings</a>';
-
-            array_unshift($links,$settings_link);
-
-            return $links;
-        }
-
-        // function to a menu option on the dashboard
-        public function add_menu_pages()
-        {
-            add_menu_page('Egosms','Egosms','manage_options','egosms',array($this,'admin_index'),plugins_url('/assets/img/icon.png',__FILE__),110);
-        }
-
-        public function admin_index()
-        {
-            // Require template
-
-            require_once plugin_dir_path(__FILE__) . '/templates/admin.php';
-        }
-
-
-
-        // Function to be triggered on activate
-        function activate(){
-            Activate::activate();
-        }
-
-        // Function to be triggered on deactivate
-        function deactivate(){
-            Deactivate::deactivate();
-        }
-
-        // Function to enqueue scripts
-        function enqueue(){
-
-            wp_enqueue_style('my_plugin_style',plugins_url('/assets/style.css',__FILE__));
-
-            wp_enqueue_script('my_plugin_script',plugins_url('/assets/script.js',__FILE__));
-        }
-    }
-
-
-
-
-    $egosms = new Egosms();
-    $egosms->register();
-
-    // Activation hook
-    register_activation_hook(__FILE__,array($egosms,'activate'));
-
-    // Deactivation hook
-    register_deactivation_hook(__FILE__,array($egosms,'deactivate'));
+    Inc\Init::register_services();
 }
