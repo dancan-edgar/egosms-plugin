@@ -18,7 +18,8 @@ final class Init
 
         return [
             Pages\Admin::class,
-            Base\Enqueue::class
+            Base\Enqueue::class,
+            Base\SettingsLink::class
         ];
     }
 
@@ -47,57 +48,3 @@ final class Init
         return $service;
     }
 }
-
-
-//use Inc\Activate;
-//use Inc\Deactivate;
-//
-//if(! class_exists('Egosms')){
-//    class Egosms {
-//
-//        public $plugin;
-//
-//        function __construct()
-//        {
-//            $this->plugin = plugin_basename(__FILE__);
-//        }
-//
-//        function register(){
-//
-//            add_filter("plugin_action_links_$this->plugin",array($this,'settings_link'));
-//        }
-//
-//        public function settings_link($links)
-//        {
-//            $settings_link = '<a href="admin.php?page=egosms">Settings</a>';
-//
-//            array_unshift($links,$settings_link);
-//
-//            return $links;
-//        }
-//
-//
-//
-//        // Function to be triggered on activate
-//        function activate(){
-//            Activate::activate();
-//        }
-//
-//        // Function to be triggered on deactivate
-//        function deactivate(){
-//            Deactivate::deactivate();
-//        }
-//    }
-//
-//
-//
-//
-//    $egosms = new Egosms();
-//    $egosms->register();
-//
-//    // Activation hook
-//    register_activation_hook(__FILE__,array($egosms,'activate'));
-//
-//    // Deactivation hook
-//    register_deactivation_hook(__FILE__,array($egosms,'deactivate'));
-//}

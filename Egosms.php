@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 /**
  * @package Egosms
  * @author Ampeire Edgar
@@ -35,21 +33,49 @@ You should have received a copy of the GNU General Public License
 along with Datero. If not, see https://www.gnu.org/licenses/old-licenses/gpl-2.0.html.
 */
 
+// If this file is accessed directy, abort !!
 defined('ABSPATH') or die("You dont have access to this file");
 
-if( ! function_exists('add_action')){
+if (!function_exists('add_action')) {
     die('You dont have access to this file');
 }
 
-if( file_exists(dirname(__FILE__) . '/vendor/autoload.php')){
+// Require one the Composer Autoload file
+if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
 
     require_once dirname(__FILE__) . '/vendor/autoload.php';
 
 }
 
-define('PLUGIN_PATH',plugin_dir_path(__FILE__));
-define('PLUGIN_URL',plugin_dir_url(__FILE__));
-if(class_exists('Inc\\Init')){
+// Define constants
+define('PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('PLUGIN_URL', plugin_dir_url(__FILE__));
+define('PLUGIN', plugin_basename(__FILE__));
+
+
+use Inc\Base\Activate;
+use Inc\Base\Deactivate;
+
+// Function to be triggered on activate
+function egosms_activate()
+{
+    Activate::activate();
+}
+
+// Function to be triggered on deactivate
+function egosms_deactivate()
+{
+    Deactivate::deactivate();
+}
+
+// Activation hook
+register_activation_hook(__FILE__, 'egosms_activate');
+
+// Deactivation hook
+register_deactivation_hook(__FILE__, 'egosms_deactivate');
+//}
+
+if (class_exists('Inc\\Init')) {
 
     Inc\Init::register_services();
 }
